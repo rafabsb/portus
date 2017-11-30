@@ -34,7 +34,6 @@ services:
       - 3000:3000
     links:
       - db
-      - nginx:nginx
     volumes:
       - ${PWD}/secrets:/certificates:ro
       - ${PWD}/config/config.yml:/srv/Portus/config/config.yml:ro
@@ -87,8 +86,8 @@ services:
     command: ["/bin/sh", "/etc/docker/registry/init"]
     environment:
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}/v2/token
-      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}
+      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}:3000/v2/token
+      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:5000
       REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
 
@@ -100,7 +99,7 @@ services:
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
         - name: portus
-          url: https://${MACHINE_FQDN}/v2/webhooks/events
+          url: https://${MACHINE_FQDN}:3000/v2/webhooks/events
           timeout: 2000ms
           threshold: 5
           backoff: 1s
@@ -115,14 +114,16 @@ services:
     links:
       - portus:portus
 
-  nginx:
-    image: library/nginx:alpine
-    labels:
-      io.rancher.scheduler.affinity:host_label: portus=true
-    volumes:
-      - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${PWD}/secrets:/secrets:ro
-      - static:/srv/Portus/public:ro
-    links:
-      - registry:registry
-      - portus:portus
+#  nginx:
+#    image: library/nginx:alpine
+#    labels:
+#      io.rancher.scheduler.affinity:host_label: portus=true
+#    volumes:
+#      - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#      - ${PWD}/secrets:/secrets:ro
+#      - static:/srv/Portus/public:ro
+#    ports:
+#      - 5080:80
+#    links:
+#      - registry:registry
+#      - portus:portus
