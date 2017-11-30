@@ -34,6 +34,7 @@ services:
       - 3000:3000
     links:
       - db
+      - nginx:nginx
     volumes:
       - ${PWD}/secrets:/certificates:ro
       - ${PWD}/config/config.yml:/srv/Portus/config/config.yml:ro
