@@ -3,7 +3,6 @@ version: "2"
 services:
   portus:
     image: opensuse/portus:head
-    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -33,7 +32,7 @@ services:
       - RAILS_SERVE_STATIC_FILES='true'
     ports:
       - 3000:3000
-    external_links:
+    links:
       - db
     volumes:
       - ${PWD}/secrets:/certificates:ro
@@ -42,7 +41,6 @@ services:
 
   crono:
     image: opensuse/portus:head
-    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -63,14 +61,13 @@ services:
 
       # We want to execute crono, not portus
       - PORTUS_INIT_COMMAND=bin/crono
-    external_links:
+    links:
       - db
     volumes:
       - ${PWD}/secrets:/certificates:ro
 
   db:
     image: library/mariadb:10.0.23
-    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -84,7 +81,6 @@ services:
 
   registry:
     image: library/registry:2.6
-    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     command: ["/bin/sh", "/etc/docker/registry/init"]
@@ -115,12 +111,11 @@ services:
     ports:
       - 5000:5000
       - 5001:5001 # required to access debug service
-    external_links:
-      - portus
+    links:
+      - portus:portus
 
   nginx:
     image: library/nginx:alpine
-    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     volumes:
@@ -130,6 +125,6 @@ services:
     ports:
       - 2180:80
       - 21443:443
-    external_links:
-      - registry
-      - portus
+    links:
+      - registry:registry
+      - portus:portus
