@@ -6,7 +6,7 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
-      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
+ #     - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
       - PORTUS_MACHINE_FQDN=${MACHINE_FQDN}
 
       # DB. The password for the database should definitely not be here. You are
@@ -45,9 +45,8 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
-      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
+#      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
       - PORTUS_MACHINE_FQDN=${MACHINE_FQDN}
-
 
       # DB. The password for the database should definitely not be here. You are
       # probably better off with Docker Swarm secrets.
