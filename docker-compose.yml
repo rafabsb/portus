@@ -3,6 +3,7 @@ version: "2"
 services:
   portus:
     image: opensuse/portus:head
+    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -41,6 +42,7 @@ services:
 
   crono:
     image: opensuse/portus:head
+    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -68,6 +70,7 @@ services:
 
   db:
     image: library/mariadb:10.0.23
+    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     environment:
@@ -81,6 +84,7 @@ services:
 
   registry:
     image: library/registry:2.6
+    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     command: ["/bin/sh", "/etc/docker/registry/init"]
@@ -116,6 +120,7 @@ services:
 
   nginx:
     image: library/nginx:alpine
+    network_mode: host
     labels:
       io.rancher.scheduler.affinity:host_label: portus=true
     volumes:
