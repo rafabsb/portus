@@ -30,7 +30,7 @@ services:
     links:
       - db
     volumes:
-      - ${PWD}/secrets:/certificates:ro
+      - /apps/portus/secrets:/certificates:ro
       #- static:/srv/Portus/public
 
   crono:
@@ -55,7 +55,7 @@ services:
     links:
       - db
     volumes:
-      - ${PWD}/secrets:/certificates:ro
+      - /apps/portus/secrets:/certificates:ro
 
   db:
     image: library/mariadb:10.0.23
@@ -90,9 +90,9 @@ services:
           backoff: 1s
     volumes:
       - ${PORTUS_DATA_DIR}/var/lib/portus/registry:/var/lib/registry
-      - ${PWD}/secrets:/secrets:ro
-      - ${PWD}/registry/config.yml:/etc/docker/registry/config.yml:ro
-      - ${PWD}/registry/init:/etc/docker/registry/init:ro
+      - /apps/portus/secrets:/secrets:ro
+      - /apps/portus/registry/config.yml:/etc/docker/registry/config.yml
+      - /apps/portus/registry/init:/etc/docker/registry/init
     ports:
       - 5000:5000
       - 5001:5001 # required to access debug service
@@ -102,8 +102,8 @@ services:
   nginx:
     image: library/nginx:alpine
     volumes:
-      - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${PWD}/secrets:/secrets:ro
+      - /apps/portus/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - /apps/portus/secrets:/secrets:ro
       - static:/srv/Portus/public:ro
     ports:
       - 80:80
