@@ -124,8 +124,7 @@ services:
       - ${PWD}/secrets:/secrets:ro
       - static:/srv/Portus/public:ro
     ports:
-      - 2180:80
-      - 21443:443
+      - 443:443
     links:
       - registry:registry
       - portus:portus
