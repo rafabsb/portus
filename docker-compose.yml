@@ -116,7 +116,7 @@ services:
       - 5000:5000
       - 5001:5001 # required to access debug service
     links:
-      - portus:portus
+      - portus
 
   nginx:
     image: library/nginx:alpine
@@ -131,5 +131,5 @@ services:
       - 2180:80
       - 21443:443
     links:
-      - registry:registry
-      - portus:portus
+      - registry
+      - portus
