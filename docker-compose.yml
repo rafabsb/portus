@@ -87,8 +87,8 @@ services:
     command: ["/bin/sh", "/etc/docker/registry/init"]
     environment:
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}:21443/v2/token
-      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:21443
+      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}/v2/token
+      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
 
@@ -100,7 +100,7 @@ services:
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
         - name: portus
-          url: https://${MACHINE_FQDN}:21443/v2/webhooks/events
+          url: https://${MACHINE_FQDN}/v2/webhooks/events
           timeout: 2000ms
           threshold: 5
           backoff: 1s
