@@ -24,15 +24,3 @@ services:
       initializing_timeout: '60000'
       interval: '2000'
       reinitializing_timeout: '60000'
-  registry:
-    scale: '1'
-    start_on_create: 'true'
-  crono:
-    scale: '1'
-    start_on_create: 'true'
-  db:
-    scale: '1'
-    start_on_create: 'true'
-  portus:
-    scale: '1'
-    start_on_create: 'true'
