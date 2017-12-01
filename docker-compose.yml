@@ -1,5 +1,7 @@
 version: "2"
 
+env_file: .env
+
 services:
   portus:
     image: opensuse/portus:head
@@ -34,10 +36,26 @@ services:
       - 3000:3000
     links:
       - db
+    depends_on:
+      - db
     volumes:
       - ${PWD}/secrets:/certificates:ro
       - ${PWD}/config/config.yml:/srv/Portus/config/config.yml:ro
       #- static:/srv/Portus/public
+
+  registry-ui-lb:
+    image: rancher/lb-service-haproxy:v0.7.15
+    ports:
+    - 1780:1780
+    labels:
+      io.rancher.container.agent.role: environmentAdmin,agent
+      io.rancher.container.agent_service.drain_provider: 'true'
+      traefik.frontend.rule: Host:reg.all.rafabsb.me
+      traefik.enable: 'true'
+      traefik.port: '1780'
+      io.rancher.container.create_agent: 'true'
+    depends_on:
+      - portus
 
   crono:
     image: opensuse/portus:head
