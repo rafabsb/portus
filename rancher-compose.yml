@@ -1,8 +1,8 @@
 version: '2'
 services:
   registry-ui-lb:
-    scale: 1
-    start_on_create: true
+    scale: '1'
+    start_on_create: 'true'
     lb_config:
       certs: []
       config: |-
@@ -11,28 +11,28 @@ services:
       port_rules:
       - backend_name: my_custom_backend
         path: ''
-        priority: 1
+        priority: '1'
         protocol: http
         service: portus
-        source_port: 1780
-        target_port: 3000
+        source_port: '1780'
+        target_port: '3000'
     health_check:
-      healthy_threshold: 2
-      response_timeout: 2000
-      port: 42
-      unhealthy_threshold: 3
-      initializing_timeout: 60000
-      interval: 2000
-      reinitializing_timeout: 60000
+      healthy_threshold: '2'
+      response_timeout: '2000'
+      port: '42'
+      unhealthy_threshold: '3'
+      initializing_timeout: '60000'
+      interval: '2000'
+      reinitializing_timeout: '60000'
   registry:
-    scale: 1
-    start_on_create: true
+    scale: '1'
+    start_on_create: 'true'
   crono:
-    scale: 1
-    start_on_create: true
+    scale: '1'
+    start_on_create: 'true'
   db:
-    scale: 1
-    start_on_create: true
+    scale: '1'
+    start_on_create: 'true'
   portus:
-    scale: 1
-    start_on_create: true
+    scale: '1'
+    start_on_create: 'true'
