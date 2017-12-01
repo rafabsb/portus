@@ -6,7 +6,7 @@ services:
   portus:
     image: opensuse/portus:head
     labels:
-      io.rancher.scheduler.affinity:host_label: portus=true
+      io.rancher.scheduler.affinity:host_label: traefik_lb=true
     environment:
  #     - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
       - PORTUS_MACHINE_FQDN=${MACHINE_FQDN}
