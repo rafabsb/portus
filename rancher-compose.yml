@@ -1,0 +1,39 @@
+version: '2'
+services:
+  registry:
+    scale: 1
+    start_on_create: true
+  registry-lb:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      config: |-
+        backend my_backend
+        server $$IP ssl verify none
+      port_rules:
+      - backend_name: my_backend
+        hostname: ''
+        path: ''
+        priority: 1
+        protocol: http
+        service: portus
+        source_port: 1780
+        target_port: 3000
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 42
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      reinitializing_timeout: 60000
+  crono:
+    scale: 1
+    start_on_create: true
+  db:
+    scale: 1
+    start_on_create: true
+  portus:
+    scale: 1
+    start_on_create: true
