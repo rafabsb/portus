@@ -7,7 +7,7 @@ services:
       certs: []
       config: |-
         backend my_custom_backend
-        server $IP ssl verify none
+        server $$IP ssl verify none
       port_rules:
       - backend_name: my_custom_backend
         path: ''
